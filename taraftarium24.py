@@ -66,35 +66,53 @@ def extract_base_m3u8_url(page, event_url):
         print(f"-> ❌ Event sayfası işlenirken hata oluştu: {e}")
         return None
 
-# --- GÜNCELLENEN FONKSİYON: Tüm Kanal Listesini Kazıma ---
+# --- TEKRAR GÜNCELLENEN FONKSİYON: Tüm Kanal Listesini Kazıma ---
 def scrape_all_channels(page):
     """
-    Taraftarium ana sayfasında JS'in yüklenmesini bekler ve tüm kanalların
-    isimlerini ve stream ID'lerini DATA-URL'den kazır.
-    Daha genel seçici ve daha uzun bekleme süresi kullanır.
+    Taraftarium ana sayfasını ziyaret eder, AĞ TRAFİĞİNİN DURMASINI bekler
+    ve JS ile oluşturulan kanalların isimlerini ve ID'lerini kazır.
     """
     print(f"\n📡 Tüm kanallar {TARAFTARIUM_DOMAIN} adresinden çekiliyor...")
     channels = []
     try:
-        # Ana sayfa zaten yüklü. Sadece JS'in listeyi doldurmasını bekle.
-
-        # --- DEĞİŞİKLİK: Daha basit seçici ve daha uzun bekleme ---
-        # Sadece data-url içeren ilk .mac elementinin görünmesini bekle
-        first_channel_selector = ".mac[data-url]"
-        print(f"-> Kanal listesi elemanlarının ('{first_channel_selector}') yüklenmesi bekleniyor (Max 35sn)...")
-        page.wait_for_selector(first_channel_selector, timeout=35000, state="visible") # Süreyi 35 saniyeye çıkardık
-        print("-> ✅ Kanal listesi elemanları yüklendi.")
+        # --- DEĞİŞİKLİK: 'networkidle' ile git ve daha uzun bekle ---
+        print(f"-> Ana sayfaya gidiliyor ve ağ trafiğinin durması bekleniyor (Max 45sn)...")
+        # Sayfaya tekrar gitmek daha temiz olabilir
+        page.goto(TARAFTARIUM_DOMAIN, timeout=45000, wait_until='networkidle')
+        print("-> Ağ trafiği durdu veya zaman aşımına yaklaşıldı.")
         # --- DEĞİŞİKLİK BİTTİ ---
 
-        # Ekstra kısa bekleme (opsiyonel ama bazen yardımcı olur)
-        page.wait_for_timeout(1000)
+        # Ekstra bekleme, JS'in DOM'u güncellemesi için
+        print("-> DOM güncellemeleri için 5 saniye bekleniyor...")
+        page.wait_for_timeout(5000)
 
-        # Tüm '.mac[data-url]' elementlerini al (belki farklı listelerde de vardır)
-        channel_elements = page.query_selector_all(".mac[data-url]")
+        # --- DEĞİŞİKLİK: JS ile elementlerin varlığını kontrol et ---
+        list_container_selector = ".macListe#hepsi"
+        mac_item_selector = ".mac[data-url]" # Aradığımız elementler
+        
+        print(f"-> Sayfa içinde '{list_container_selector}' içinde '{mac_item_selector}' elementleri var mı kontrol ediliyor...")
+        
+        # Sayfanın KENDİ JS ORTAMINDA kontrol yap: ".macListe#hepsi" içinde ".mac[data-url]" var mı?
+        elements_exist = page.evaluate(f'''() => {{
+            const container = document.querySelector('{list_container_selector}');
+            if (!container) return false;
+            return container.querySelector('{mac_item_selector}') !== null;
+        }}''')
 
-        if not channel_elements:
-            print("❌ Ana sayfada [data-url] içeren '.mac' elemanı bulunamadı.")
+        if not elements_exist:
+            print(f"❌ Sayfa içinde '{mac_item_selector}' elemanları bulunamadı (JS değerlendirmesi başarısız).")
+            print("   Muhtemel Nedenler: JS çalışmadı, yapı değişti, veya seçici hatalı.")
+            # Hata ayıklama için sayfa içeriğini kaydedebiliriz:
+            # with open("page_content_error.html", "w", encoding="utf-8") as f:
+            #     f.write(page.content())
+            # print("   Hata ayıklama için sayfa içeriği 'page_content_error.html' dosyasına kaydedildi.")
             return []
+            
+        print("-> ✅ JS değerlendirmesi başarılı, kanallar sayfada mevcut.")
+        # --- DEĞİŞİKLİK BİTTİ ---
+
+        # Elementler varsa artık çekebiliriz
+        channel_elements = page.query_selector_all(f"{list_container_selector} {mac_item_selector}")
 
         print(f"-> {len(channel_elements)} adet potansiyel kanal elemanı bulundu. Bilgiler çıkarılıyor...")
         processed_ids = set()
@@ -131,10 +149,7 @@ def scrape_all_channels(page):
         print(f"✅ {len(channels)} adet benzersiz kanal bilgisi başarıyla çıkarıldı.")
         return channels
 
-    except PlaywrightTimeoutError:
-         print(f"❌ Zaman aşımı: Kanal listesi elemanları ({first_channel_selector}) belirtilen sürede yüklenmedi.")
-         print("   Sayfanın yapısı değişmiş veya JS çok yavaş yükleniyor olabilir.")
-         return []
+    # TimeoutError'u burada ayrıca yakalamaya gerek yok, evaluate kontrol ediyor.
     except Exception as e:
         print(f"❌ Kanal listesi işlenirken hata oluştu: {e}")
         return []
