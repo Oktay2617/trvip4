@@ -10,6 +10,50 @@ TARAFTARIUM_DOMAIN = "https://taraftarium24.xyz/"
 # Kullanılacak User-Agent
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
 
+# --- EKSİK OLAN FONKSİYON GERİ EKLENDİ ---
+def scrape_default_channel_info(page):
+    """
+    Taraftarium ana sayfasını ziyaret eder ve varsayılan iframe'den
+    event.html URL'sini ve stream ID'sini alır.
+    """
+    print(f"\n📡 Varsayılan kanal bilgisi {TARAFTARIUM_DOMAIN} adresinden alınıyor...")
+    try:
+        page.goto(TARAFTARIUM_DOMAIN, timeout=25000, wait_until='domcontentloaded')
+
+        iframe_selector = "iframe#customIframe"
+        print(f"-> Varsayılan iframe ('{iframe_selector}') aranıyor...")
+        page.wait_for_selector(iframe_selector, timeout=10000)
+        iframe_element = page.query_selector(iframe_selector)
+
+        if not iframe_element:
+            print("❌ Ana sayfada 'iframe#customIframe' bulunamadı.")
+            return None, None
+
+        iframe_src = iframe_element.get_attribute('src')
+        if not iframe_src:
+            print("❌ Iframe 'src' özniteliği boş.")
+            return None, None
+
+        # event.html URL'sini oluştur (eğer src relativ ise)
+        event_url = urljoin(TARAFTARIUM_DOMAIN, iframe_src)
+
+        # event.html URL'sinden 'id' parametresini (streamId) al
+        parsed_event_url = urlparse(event_url)
+        query_params = parse_qs(parsed_event_url.query)
+        stream_id = query_params.get('id', [None])[0]
+
+        if not stream_id:
+            print(f"❌ Event URL'sinde ({event_url}) 'id' parametresi bulunamadı.")
+            return None, None
+
+        print(f"✅ Varsayılan kanal bilgisi alındı: ID='{stream_id}', EventURL='{event_url}'")
+        return event_url, stream_id
+
+    except Exception as e:
+        print(f"❌ Ana sayfaya ulaşılamadı veya iframe bilgisi alınamadı: {e.__class__.__name__}")
+        return None, None
+# --- DÜZELTME BİTTİ ---
+
 # --- event.html'den M3U8 base URL'ini çıkarma fonksiyonu (DEĞİŞİKLİK YOK) ---
 def extract_base_m3u8_url(page, event_url):
     """
@@ -19,10 +63,9 @@ def extract_base_m3u8_url(page, event_url):
         print(f"\n-> M3U8 Base URL'i almak için Event sayfasına gidiliyor: {event_url}")
         page.goto(event_url, timeout=20000, wait_until="domcontentloaded")
         content = page.content()
-        # Önceki kodda çalışan Regex'i kullanıyoruz
         base_url_match = re.search(r"['\"](https?://[^'\"]+/checklist/)['\"]", content)
         if not base_url_match:
-             base_url_match = re.search(r"streamUrl\s*=\s*['\"](https?://[^'\"]+/checklist/)['\"]", content) # Alternatif
+             base_url_match = re.search(r"streamUrl\s*=\s*['\"](https?://[^'\"]+/checklist/)['\"]", content)
         if not base_url_match:
             print(" -> ❌ Event sayfası kaynağında '/checklist/' ile biten base URL bulunamadı.")
             return None
@@ -33,7 +76,7 @@ def extract_base_m3u8_url(page, event_url):
         print(f"-> ❌ Event sayfası işlenirken hata oluştu: {e}")
         return None
 
-# --- YENİ FONKSİYON: Tüm Kanal Listesini Kazıma ---
+# --- Tüm Kanal Listesini Kazıma Fonksiyonu (DEĞİŞİKLİK YOK) ---
 def scrape_all_channels(page):
     """
     Taraftarium ana sayfasını ziyaret eder, JS'in yüklenmesini bekler
@@ -42,15 +85,16 @@ def scrape_all_channels(page):
     print(f"\n📡 Tüm kanallar {TARAFTARIUM_DOMAIN} adresinden çekiliyor...")
     channels = []
     try:
-        page.goto(TARAFTARIUM_DOMAIN, timeout=25000, wait_until='networkidle') # JS'in çalışması için 'networkidle' bekleyelim
+        # Ana sayfaya tekrar gitmek yerine mevcut sayfada kalabiliriz,
+        # çünkü scrape_default_channel_info zaten oradaydı.
+        # page.goto(TARAFTARIUM_DOMAIN, timeout=25000, wait_until='networkidle') # Tekrar gitmeye gerek yok
 
-        # Kanal listesi elemanlarının (JS tarafından oluşturulan) görünmesini bekle
         list_item_selector = ".macListe .mac"
         print(f"-> Kanal listesi elemanlarının ('{list_item_selector}') yüklenmesi bekleniyor...")
-        page.wait_for_selector(list_item_selector, timeout=15000)
+        # Sayfa zaten yüklü olduğu için bekleme süresini biraz daha kısa tutabiliriz
+        page.wait_for_selector(list_item_selector, timeout=20000, state="visible")
         print("-> ✅ Kanal listesi elemanları yüklendi.")
 
-        # Sayfadaki tüm kanal elemanlarını bul
         channel_elements = page.query_selector_all(list_item_selector)
 
         if not channel_elements:
@@ -58,26 +102,24 @@ def scrape_all_channels(page):
             return []
 
         print(f"-> {len(channel_elements)} adet potansiyel kanal elemanı bulundu. Bilgiler çıkarılıyor...")
-        
-        processed_ids = set() # Aynı ID'li kanalları tekrar eklememek için
+        processed_ids = set()
 
         for element in channel_elements:
-            # Kanal adını al (.takimlar içindeki metin)
             name_element = element.query_selector(".takimlar")
             channel_name = name_element.inner_text().strip() if name_element else "İsimsiz Kanal"
 
-            # Stream ID'sini al (Varsayım: JS 'data-stream-id' özniteliği ekliyor)
-            # --- BU KISIM GEREKİRSE DEĞİŞTİRİLMELİ ---
-            stream_id = element.get_attribute('data-stream-id') # VEYA 'data-id', 'data-channel' vb. olabilir
-            
-            # Eğer data-stream-id yoksa, tıklama olayından ID'yi çıkarmaya çalışalım (Daha karmaşık)
-            # Bu kısım şimdilik YORUMDA, çünkü yapıyı bilmiyoruz
-            # if not stream_id:
-            #     onclick_attr = element.get_attribute('onclick')
-            #     if onclick_attr:
-            #         match = re.search(r"loadChannel\(['\"]([^'\"]+)['\"]\)", onclick_attr)
-            #         if match:
-            #             stream_id = match.group(1)
+            # Stream ID'sini alma - DİKKAT: Bu kısım hala bir varsayım!
+            stream_id = element.get_attribute('data-stream-id')
+
+            # --- Geliştirilmiş ID Çıkarma (onclick'ten) ---
+            if not stream_id:
+                onclick_attr = element.get_attribute('onclick')
+                if onclick_attr:
+                    # Örnek onclick="loadChannel('androstreamlivebs2')"
+                    match = re.search(r"loadChannel\s*\(\s*['\"]([^'\"]+)['\"]\s*\)", onclick_attr, re.IGNORECASE)
+                    if match:
+                        stream_id = match.group(1)
+            # --- Bitti ---
 
             if stream_id and stream_id not in processed_ids:
                 channels.append({
@@ -85,8 +127,10 @@ def scrape_all_channels(page):
                     'id': stream_id
                 })
                 processed_ids.add(stream_id)
-            # else:
-            #     print(f"-> Uyarı: '{channel_name}' için stream ID bulunamadı veya zaten işlendi.")
+            else:
+                 # ID bulunamayanları veya tekrarları sessizce atla
+                 pass
+                 # print(f"-> Uyarı: '{channel_name}' için stream ID bulunamadı veya zaten işlendi.")
 
 
         print(f"✅ {len(channels)} adet benzersiz kanal bilgisi başarıyla çıkarıldı.")
@@ -94,16 +138,17 @@ def scrape_all_channels(page):
 
     except PlaywrightTimeoutError:
          print(f"❌ Zaman aşımı: Kanal listesi elemanları ({list_item_selector}) belirtilen sürede yüklenmedi.")
+         print("   Sayfanın yapısı değişmiş veya JS yavaş yükleniyor olabilir.")
          return []
     except Exception as e:
         print(f"❌ Ana sayfa işlenirken hata oluştu: {e}")
         return []
 
-# --- Gruplama Fonksiyonu (DEĞİŞİKLİK YOK - Gerekirse güncellenir) ---
+# --- Gruplama Fonksiyonu (DEĞİŞİKLİK YOK) ---
 def get_channel_group(channel_name):
     channel_name_lower = channel_name.lower()
     group_mappings = {
-        'BeinSports': ['bein sports', 'beın sports', ' bs', ' bein '], # Kısaltmalar eklendi
+        'BeinSports': ['bein sports', 'beın sports', ' bs', ' bein '],
         'S Sports': ['s sport'],
         'Tivibu': ['tivibu spor', 'tivibu'],
         'Exxen': ['exxen'],
@@ -116,15 +161,13 @@ def get_channel_group(channel_name):
         for keyword in keywords:
             if keyword in channel_name_lower:
                 return group
-    # ID'lere göre ek kontrol (Taraftarium'a özel olabilir)
     if 'bs' in channel_name_lower: return 'BeinSports'
     if 'ss' in channel_name_lower: return 'S Sports'
     if 'ts' in channel_name_lower: return 'Tivibu'
     if 'ex' in channel_name_lower: return 'Exxen'
+    return "Diğer Kanallar"
 
-    return "Diğer Kanallar" # Varsayılan grup
-
-# --- Ana Fonksiyon ---
+# --- Ana Fonksiyon (DEĞİŞİKLİK YOK) ---
 def main():
     with sync_playwright() as p:
         print("🚀 Playwright ile Taraftarium24 M3U8 Kanal İndirici Başlatılıyor (Tüm Liste)...")
@@ -133,8 +176,8 @@ def main():
         context = browser.new_context(user_agent=USER_AGENT)
         page = context.new_page()
 
-        # 1. Adım: Varsayılan kanaldan event URL'sini ve ID'sini al (Base URL'i bulmak için)
-        default_event_url, default_stream_id = scrape_default_channel_info(page)
+        # 1. Adım: Varsayılan kanaldan event URL'sini ve ID'sini al
+        default_event_url, default_stream_id = scrape_default_channel_info(page) # Hata buradaydı
         if not default_event_url:
             print("❌ UYARI: Varsayılan kanal bilgisi alınamadı, M3U8 Base URL bulunamıyor. İşlem sonlandırılıyor.")
             browser.close()
@@ -147,7 +190,7 @@ def main():
             browser.close()
             sys.exit(1)
 
-        # 3. Adım: Ana sayfaya tekrar gidip (veya aynı sayfada kalarak) tüm kanalları kazı
+        # 3. Adım: Ana sayfadaki tüm kanalları kazı
         channels = scrape_all_channels(page)
         if not channels:
             print("❌ UYARI: Hiçbir kanal bulunamadı, işlem sonlandırılıyor.")
@@ -159,8 +202,6 @@ def main():
         print(f"\n📺 {len(channels)} kanal için M3U8 linkleri oluşturuluyor...")
         created = 0
 
-        # --- Global Başlıklar için Referer ---
-        # event.html'nin değil, ana sayfanın referer olması daha mantıklı olabilir
         player_origin_host = TARAFTARIUM_DOMAIN.rstrip('/')
         player_referer = TARAFTARIUM_DOMAIN
 
@@ -170,14 +211,12 @@ def main():
             f"#EXT-X-REFERER:{player_referer}",
             f"#EXT-X-ORIGIN:{player_origin_host}"
         ]
-        # --- Bitti ---
 
         for i, channel_info in enumerate(channels, 1):
             channel_name = channel_info['name']
             stream_id = channel_info['id']
-            group_name = get_channel_group(channel_name if channel_name != "İsimsiz Kanal" else stream_id) # Gruplama için ID'yi de kullan
+            group_name = get_channel_group(channel_name if channel_name != "İsimsiz Kanal" else stream_id)
 
-            # M3U8 linkini oluştur
             m3u8_link = f"{base_m3u8_url}{stream_id}.m3u8"
 
             print(f"[{i}/{len(channels)}] {channel_name} (ID: {stream_id}, Grup: {group_name}) -> {m3u8_link}")
