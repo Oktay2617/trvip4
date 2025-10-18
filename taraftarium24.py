@@ -71,40 +71,39 @@ def scrape_all_channels(page):
     """
     Taraftarium ana sayfasında JS'in yüklenmesini bekler ve tüm kanalların
     isimlerini ve stream ID'lerini DATA-URL'den kazır.
+    Daha genel seçici ve daha uzun bekleme süresi kullanır.
     """
     print(f"\n📡 Tüm kanallar {TARAFTARIUM_DOMAIN} adresinden çekiliyor...")
     channels = []
     try:
-        # Ana sayfa zaten yüklü, JS'in listeyi doldurmasını bekle
-        list_container_selector = ".macListeWrapper" # Ana kapsayıcı
-        # İlk kanalın görünmesini bekle (daha spesifik bir bekleme)
-        first_channel_selector = f"{list_container_selector} .macListe#hepsi .mac[data-url]"
-        print(f"-> Kanal listesi elemanlarının ('{first_channel_selector}') yüklenmesi bekleniyor...")
-        page.wait_for_selector(first_channel_selector, timeout=25000, state="visible") # Daha uzun bekle
-        print("-> ✅ Kanal listesi elemanları yüklendi.")
-        
-        # Ekstra bekleme, tüm listenin dolması için (bazen JS yavaş olabilir)
-        page.wait_for_timeout(2000) 
+        # Ana sayfa zaten yüklü. Sadece JS'in listeyi doldurmasını bekle.
 
-        # Sadece görünür olan #hepsi listesindeki kanalları alalım
-        channel_elements = page.query_selector_all(".macListe#hepsi .mac[data-url]")
+        # --- DEĞİŞİKLİK: Daha basit seçici ve daha uzun bekleme ---
+        # Sadece data-url içeren ilk .mac elementinin görünmesini bekle
+        first_channel_selector = ".mac[data-url]"
+        print(f"-> Kanal listesi elemanlarının ('{first_channel_selector}') yüklenmesi bekleniyor (Max 35sn)...")
+        page.wait_for_selector(first_channel_selector, timeout=35000, state="visible") # Süreyi 35 saniyeye çıkardık
+        print("-> ✅ Kanal listesi elemanları yüklendi.")
+        # --- DEĞİŞİKLİK BİTTİ ---
+
+        # Ekstra kısa bekleme (opsiyonel ama bazen yardımcı olur)
+        page.wait_for_timeout(1000)
+
+        # Tüm '.mac[data-url]' elementlerini al (belki farklı listelerde de vardır)
+        channel_elements = page.query_selector_all(".mac[data-url]")
 
         if not channel_elements:
-            print("❌ '.macListe#hepsi' içinde [data-url] içeren '.mac' elemanı bulunamadı.")
-            # Diğer sekmeleri de kontrol etmeyi deneyebiliriz ama şimdilik #hepsi yeterli olmalı
+            print("❌ Ana sayfada [data-url] içeren '.mac' elemanı bulunamadı.")
             return []
 
         print(f"-> {len(channel_elements)} adet potansiyel kanal elemanı bulundu. Bilgiler çıkarılıyor...")
         processed_ids = set()
 
         for element in channel_elements:
-            # Kanal adını al
             name_element = element.query_selector(".takimlar")
             channel_name = name_element.inner_text().strip() if name_element else "İsimsiz Kanal"
-            # İsimden "CANLI" etiketini temizle (varsa)
             channel_name = channel_name.replace('CANLI', '').strip()
 
-            # --- DÜZELTME: Stream ID'yi DATA-URL'den al ---
             data_url = element.get_attribute('data-url')
             stream_id = None
             if data_url:
@@ -113,11 +112,9 @@ def scrape_all_channels(page):
                     query_params = parse_qs(parsed_data_url.query)
                     stream_id = query_params.get('id', [None])[0]
                 except Exception:
-                    pass # Geçersiz data-url ise atla
-            # --- DÜZELTME BİTTİ ---
+                    pass
 
             if stream_id and stream_id not in processed_ids:
-                # Zaman bilgisini de ekleyelim (varsa)
                 time_element = element.query_selector(".saat")
                 time_str = time_element.inner_text().strip() if time_element else None
                 if time_str and time_str != "CANLI":
@@ -130,11 +127,6 @@ def scrape_all_channels(page):
                     'id': stream_id
                 })
                 processed_ids.add(stream_id)
-            # else:
-            #     # ID bulunamayanları veya tekrarları loglamak isterseniz:
-            #     print(f"-> Uyarı: '{channel_name}' için stream ID bulunamadı ('{data_url}') veya zaten işlendi.")
-            #     pass
-
 
         print(f"✅ {len(channels)} adet benzersiz kanal bilgisi başarıyla çıkarıldı.")
         return channels
