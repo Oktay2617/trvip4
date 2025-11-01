@@ -8,7 +8,7 @@ from playwright.sync_api import sync_playwright, Error as PlaywrightError, Timeo
 TARAFTARIUM_DOMAIN = "https://taraftarium24.xyz/"
 
 # Kullanılacak User-Agent
-USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/5.0 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
 
 # --- Varsayılan Kanal Bilgisini Alma Fonksiyonu (DEĞİŞİKLİK YOK) ---
 def scrape_default_channel_info(page):
@@ -66,7 +66,7 @@ def extract_base_m3u8_url(page, event_url):
         print(f"-> ❌ Event sayfası işlenirken hata oluştu: {e}")
         return None
 
-# --- TEKRAR GÜNCELLENEN FONKSİYON: Tüm Kanal Listesini Kazıma (YİNELENENLERE İZİN VER) ---
+# --- GÜNCELLENEN FONKSİYON: 'networkidle' yerine 'wait_for_selector' kullanıldı ---
 def scrape_all_channels(page):
     """
     Taraftarium ana sayfasında JS'in yüklenmesini bekler ve TÜM kanalların
@@ -75,29 +75,26 @@ def scrape_all_channels(page):
     print(f"\n📡 Tüm kanallar {TARAFTARIUM_DOMAIN} adresinden çekiliyor...")
     channels = [] # Sonuç listesi
     try:
-        print(f"-> Ana sayfaya gidiliyor ve ağ trafiğinin durması bekleniyor (Max 45sn)...")
-        page.goto(TARAFTARIUM_DOMAIN, timeout=45000, wait_until='networkidle')
-        print("-> Ağ trafiği durdu veya zaman aşımına yaklaşıldı.")
-
-        print("-> DOM güncellemeleri için 5 saniye bekleniyor...")
-        page.wait_for_timeout(5000)
-
         mac_item_selector = ".mac[data-url]"
-        print(f"-> Sayfa içinde '{mac_item_selector}' elementleri var mı kontrol ediliyor...")
 
-        elements_exist = page.evaluate(f'''() => {{
-            return document.querySelector('{mac_item_selector}') !== null;
-        }}''')
+        print(f"-> Ana sayfaya ({TARAFTARIUM_DOMAIN}) gidiliyor...")
+        # 'networkidle' yerine 'domcontentloaded' kullanıyoruz (daha hızlı).
+        page.goto(TARAFTARIUM_DOMAIN, timeout=45000, wait_until='domcontentloaded')
+        print("-> Sayfa DOM'u yüklendi.")
 
-        if not elements_exist:
-            print(f"❌ Sayfa içinde '{mac_item_selector}' elemanları bulunamadı.")
-            return []
+        # Kritik değişiklik: 'networkidle' veya 5 saniyelik kör 'timeout' beklemek yerine,
+        # ihtiyacımız olan asıl kanal elementlerinin (JS ile) yüklenmesini bekliyoruz.
+        print(f"-> Kanal listesinin ('{mac_item_selector}') yüklenmesi bekleniyor (Max 30sn)...")
+        page.wait_for_selector(mac_item_selector, timeout=30000)
+        print("-> ✅ Kanal listesi DOM'da bulundu.")
 
-        print("-> ✅ Kanallar sayfada mevcut. Bilgiler çıkarılıyor...")
+        # 'wait_for_selector' başarılı olduğu için 'elements_exist' kontrolüne gerek yok.
+        
+        print("-> Bilgiler çıkarılıyor...")
         channel_elements = page.query_selector_all(mac_item_selector)
-        print(f"-> {len(channel_elements)} adet potensiye kanal elemanı bulundu.")
+        print(f"-> {len(channel_elements)} adet potansiyel kanal elemanı bulundu.")
 
-        # --- DEĞİŞİKLİK: processed_ids ve filtreleme kaldırıldı ---
+        # --- DEĞİŞİKLİK: processed_ids ve filtreleme kaldırıldı (Mevcut kodunuzda da böyleydi) ---
         for element in channel_elements:
             name_element = element.query_selector(".takimlar")
             channel_name = name_element.inner_text().strip() if name_element else "İsimsiz Kanal"
@@ -135,7 +132,10 @@ def scrape_all_channels(page):
         return channels
 
     except Exception as e:
-        print(f"❌ Kanal listesi işlenirken hata oluştu: {e}")
+        if "timeout" in str(e).lower() and mac_item_selector in str(e):
+             print(f"❌ Kanal listesi yüklenemedi (Timeout): '{mac_item_selector}' elementi 30sn içinde bulunamadı.")
+        else:
+             print(f"❌ Kanal listesi işlenirken hata oluştu: {e}")
         return []
 
 # --- Gruplama Fonksiyonu (Güncellendi: Daha fazla anahtar kelime) ---
