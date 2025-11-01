@@ -10,6 +10,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamliveas.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivea2.m3u8
 #EXTINF:-1 tvg-name="A2" group-title="Ulusal Kanallar",A2
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivea2.m3u8
+#EXTINF:-1 tvg-name="AD Sanjoanense (w) - Barcelos (w) (23:30)" group-title="Maç Yayınları",AD Sanjoanense (w) - Barcelos (w) (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream12.m3u8
+#EXTINF:-1 tvg-name="AD Sanjoanense (w) - Barcelos (w) (23:30)" group-title="Maç Yayınları",AD Sanjoanense (w) - Barcelos (w) (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream12.m3u8
 #EXTINF:-1 tvg-name="ASVEL Villeurbanne - Chalon (22:30)" group-title="Maç Yayınları",ASVEL Villeurbanne - Chalon (22:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream44.m3u8
 #EXTINF:-1 tvg-name="ASVEL Villeurbanne - Chalon (22:30)" group-title="Maç Yayınları",ASVEL Villeurbanne - Chalon (22:30)
@@ -52,10 +56,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644269.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream256.m3u8
 #EXTINF:-1 tvg-name="Aparecida Goias - Mineiros (22:00)" group-title="Maç Yayınları",Aparecida Goias - Mineiros (22:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream256.m3u8
-#EXTINF:-1 tvg-name="Apollo 8 (w) - VC Activia (w) (21:55)" group-title="Maç Yayınları",Apollo 8 (w) - VC Activia (w) (21:55)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream421.m3u8
-#EXTINF:-1 tvg-name="Apollo 8 (w) - VC Activia (w) (21:55)" group-title="Maç Yayınları",Apollo 8 (w) - VC Activia (w) (21:55)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream421.m3u8
 #EXTINF:-1 tvg-name="Argentino Monte Maiz - Douglas Haig (22:30)" group-title="Maç Yayınları",Argentino Monte Maiz - Douglas Haig (22:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream415.m3u8
 #EXTINF:-1 tvg-name="Argentino Monte Maiz - Douglas Haig (22:30)" group-title="Maç Yayınları",Argentino Monte Maiz - Douglas Haig (22:30)
@@ -94,6 +94,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivebs4.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644187.m3u8
 #EXTINF:-1 tvg-name="Avtodor - MBA-MAI (14:00)" group-title="Maç Yayınları",Avtodor - MBA-MAI (14:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644187.m3u8
+#EXTINF:-1 tvg-name="BC Barcelos - Academico Porto (23:30)" group-title="Maç Yayınları",BC Barcelos - Academico Porto (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream7.m3u8
+#EXTINF:-1 tvg-name="BC Barcelos - Academico Porto (23:30)" group-title="Maç Yayınları",BC Barcelos - Academico Porto (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream7.m3u8
 #EXTINF:-1 tvg-name="BV Chemnitz 99 - Braunschweig (22:00)" group-title="Maç Yayınları",BV Chemnitz 99 - Braunschweig (22:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream20.m3u8
 #EXTINF:-1 tvg-name="BV Chemnitz 99 - Braunschweig (22:00)" group-title="Maç Yayınları",BV Chemnitz 99 - Braunschweig (22:00)
@@ -176,10 +180,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamliveht.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644225.m3u8
 #EXTINF:-1 tvg-name="Boulazac - Paris (18:30)" group-title="Maç Yayınları",Boulazac - Paris (18:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644225.m3u8
-#EXTINF:-1 tvg-name="Boyer T - Cecchinato M (21:00)" group-title="Maç Yayınları",Boyer T - Cecchinato M (21:00)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream205.m3u8
-#EXTINF:-1 tvg-name="Boyer T - Cecchinato M (21:00)" group-title="Maç Yayınları",Boyer T - Cecchinato M (21:00)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream205.m3u8
 #EXTINF:-1 tvg-name="Breogan - Granada (23:00)" group-title="Maç Yayınları",Breogan - Granada (23:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream23.m3u8
 #EXTINF:-1 tvg-name="Breogan - Granada (23:00)" group-title="Maç Yayınları",Breogan - Granada (23:00)
@@ -202,6 +202,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644264.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644264.m3u8
 #EXTINF:-1 tvg-name="Büyükçekmece - Petkimspor (13:00)" group-title="Maç Yayınları",Büyükçekmece - Petkimspor (13:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivebs5.m3u8
+#EXTINF:-1 tvg-name="CAB Madeira (w) - Sportiva AzorisHotels (w) (23:15)" group-title="Maç Yayınları",CAB Madeira (w) - Sportiva AzorisHotels (w) (23:15)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream14.m3u8
+#EXTINF:-1 tvg-name="CAB Madeira (w) - Sportiva AzorisHotels (w) (23:15)" group-title="Maç Yayınları",CAB Madeira (w) - Sportiva AzorisHotels (w) (23:15)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream14.m3u8
 #EXTINF:-1 tvg-name="Calvelo X - Kaplan M (23:00)" group-title="Maç Yayınları",Calvelo X - Kaplan M (23:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream212.m3u8
 #EXTINF:-1 tvg-name="Calvelo X - Kaplan M (23:00)" group-title="Maç Yayınları",Calvelo X - Kaplan M (23:00)
@@ -316,10 +320,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644283.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644197.m3u8
 #EXTINF:-1 tvg-name="Dinamo Minsk - Slutsk (16:00)" group-title="Maç Yayınları",Dinamo Minsk - Slutsk (16:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644197.m3u8
-#EXTINF:-1 tvg-name="Dolomiti Energia Trentino - Virtus Bologna (22:00)" group-title="Maç Yayınları",Dolomiti Energia Trentino - Virtus Bologna (22:00)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream35.m3u8
-#EXTINF:-1 tvg-name="Dolomiti Energia Trentino - Virtus Bologna (22:00)" group-title="Maç Yayınları",Dolomiti Energia Trentino - Virtus Bologna (22:00)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream35.m3u8
 #EXTINF:-1 tvg-name="Draisma Dynamo - Numidia Limburg (21:55)" group-title="Maç Yayınları",Draisma Dynamo - Numidia Limburg (21:55)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream424.m3u8
 #EXTINF:-1 tvg-name="Draisma Dynamo - Numidia Limburg (21:55)" group-title="Maç Yayınları",Draisma Dynamo - Numidia Limburg (21:55)
@@ -416,6 +416,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivets2.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream399.m3u8
 #EXTINF:-1 tvg-name="Frieburg - Haching Munchen (21:55)" group-title="Maç Yayınları",Frieburg - Haching Munchen (21:55)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream399.m3u8
+#EXTINF:-1 tvg-name="GDESSA (w) - Coimbroes (w) (23:30)" group-title="Maç Yayınları",GDESSA (w) - Coimbroes (w) (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream8.m3u8
+#EXTINF:-1 tvg-name="GDESSA (w) - Coimbroes (w) (23:30)" group-title="Maç Yayınları",GDESSA (w) - Coimbroes (w) (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream8.m3u8
 #EXTINF:-1 tvg-name="Gauff C - Pegula J (18:30)" group-title="Maç Yayınları",Gauff C - Pegula J (18:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644223.m3u8
 #EXTINF:-1 tvg-name="Gauff C - Pegula J (18:30)" group-title="Maç Yayınları",Gauff C - Pegula J (18:30)
@@ -440,10 +444,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285310410.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644253.m3u8
 #EXTINF:-1 tvg-name="Goransson A / Zielinski J - Bollipalli R C / Kadhe A (17:00)" group-title="Maç Yayınları",Goransson A / Zielinski J - Bollipalli R C / Kadhe A (17:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644253.m3u8
-#EXTINF:-1 tvg-name="Gorin E - Abbrat A (22:20)" group-title="Maç Yayınları",Gorin E - Abbrat A (22:20)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream208.m3u8
-#EXTINF:-1 tvg-name="Gorin E - Abbrat A (22:20)" group-title="Maç Yayınları",Gorin E - Abbrat A (22:20)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream208.m3u8
 #EXTINF:-1 tvg-name="Gran Canaria - Andorra (22:00)" group-title="Maç Yayınları",Gran Canaria - Andorra (22:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream10.m3u8
 #EXTINF:-1 tvg-name="Gran Canaria - Andorra (22:00)" group-title="Maç Yayınları",Gran Canaria - Andorra (22:00)
@@ -642,10 +642,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream38.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644250.m3u8
 #EXTINF:-1 tvg-name="Molcan A - Hanfmann Y (11:30)" group-title="Maç Yayınları",Molcan A - Hanfmann Y (11:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644250.m3u8
-#EXTINF:-1 tvg-name="Molina Basket - UE Mataro (21:30)" group-title="Maç Yayınları",Molina Basket - UE Mataro (21:30)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream16.m3u8
-#EXTINF:-1 tvg-name="Molina Basket - UE Mataro (21:30)" group-title="Maç Yayınları",Molina Basket - UE Mataro (21:30)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream16.m3u8
 #EXTINF:-1 tvg-name="Mondorf - SF Aligse (21:55)" group-title="Maç Yayınları",Mondorf - SF Aligse (21:55)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream481.m3u8
 #EXTINF:-1 tvg-name="Mondorf - SF Aligse (21:55)" group-title="Maç Yayınları",Mondorf - SF Aligse (21:55)
@@ -658,6 +654,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream377.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream503.m3u8
 #EXTINF:-1 tvg-name="Municipal Puente Alto - Chimbarongo (22:30)" group-title="Maç Yayınları",Municipal Puente Alto - Chimbarongo (22:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream503.m3u8
+#EXTINF:-1 tvg-name="Muxes - Tuzos Pachuca (23:30)" group-title="Maç Yayınları",Muxes - Tuzos Pachuca (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream231.m3u8
+#EXTINF:-1 tvg-name="Muxes - Tuzos Pachuca (23:30)" group-title="Maç Yayınları",Muxes - Tuzos Pachuca (23:30)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream231.m3u8
 #EXTINF:-1 tvg-name="Nakagawa S - Kawahashi Y (04:00)" group-title="Maç Yayınları",Nakagawa S - Kawahashi Y (04:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644256.m3u8
 #EXTINF:-1 tvg-name="Nakagawa S - Kawahashi Y (04:00)" group-title="Maç Yayınları",Nakagawa S - Kawahashi Y (04:00)
@@ -772,10 +772,6 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream237.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream237.m3u8
 #EXTINF:-1 tvg-name="Red Star - St. Etienne (22:00)" group-title="Maç Yayınları",Red Star - St. Etienne (22:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivebs2.m3u8
-#EXTINF:-1 tvg-name="Reed L - Gruber T (20:40)" group-title="Maç Yayınları",Reed L - Gruber T (20:40)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream206.m3u8
-#EXTINF:-1 tvg-name="Reed L - Gruber T (20:40)" group-title="Maç Yayınları",Reed L - Gruber T (20:40)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream206.m3u8
 #EXTINF:-1 tvg-name="Rennais - Strasbourg (17:00)" group-title="Maç Yayınları",Rennais - Strasbourg (17:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644207.m3u8
 #EXTINF:-1 tvg-name="Rennais - Strasbourg (17:00)" group-title="Maç Yayınları",Rennais - Strasbourg (17:00)
@@ -850,6 +846,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644278.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644285.m3u8
 #EXTINF:-1 tvg-name="Sinha N K - Hazawa S (11:00)" group-title="Maç Yayınları",Sinha N K - Hazawa S (11:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644285.m3u8
+#EXTINF:-1 tvg-name="Sliedrecht Sport (w) - Sneek (w) (21:55)" group-title="Spor",Sliedrecht Sport (w) - Sneek (w) (21:55)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream420.m3u8
+#EXTINF:-1 tvg-name="Sliedrecht Sport (w) - Sneek (w) (21:55)" group-title="Spor",Sliedrecht Sport (w) - Sneek (w) (21:55)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream420.m3u8
 #EXTINF:-1 tvg-name="Smart Spor 1" group-title="Spor",Smart Spor 1
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivesm1.m3u8
 #EXTINF:-1 tvg-name="Smart Spor 1" group-title="Spor",Smart Spor 1
@@ -876,6 +876,10 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644211.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivesptstv.m3u8
 #EXTINF:-1 tvg-name="Sports Tv" group-title="Spor",Sports Tv
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivesptstv.m3u8
+#EXTINF:-1 tvg-name="St. Johns (w) - Providence (w) (21:55)" group-title="Maç Yayınları",St. Johns (w) - Providence (w) (21:55)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream419.m3u8
+#EXTINF:-1 tvg-name="St. Johns (w) - Providence (w) (21:55)" group-title="Maç Yayınları",St. Johns (w) - Providence (w) (21:55)
+https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream419.m3u8
 #EXTINF:-1 tvg-name="Struff J-L - Bernet H (14:30)" group-title="Maç Yayınları",Struff J-L - Bernet H (14:30)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644274.m3u8
 #EXTINF:-1 tvg-name="Struff J-L - Bernet H (14:30)" group-title="Maç Yayınları",Struff J-L - Bernet H (14:30)
@@ -1032,16 +1036,8 @@ https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream258.m3u8
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644226.m3u8
 #EXTINF:-1 tvg-name="Utrecht - NEC Nijmegen (18:45)" group-title="Maç Yayınları",Utrecht - NEC Nijmegen (18:45)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivech285644226.m3u8
-#EXTINF:-1 tvg-name="VC Eltmann - TV Rottenburg (21:25)" group-title="Maç Yayınları",VC Eltmann - TV Rottenburg (21:25)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream395.m3u8
-#EXTINF:-1 tvg-name="VC Eltmann - TV Rottenburg (21:25)" group-title="Maç Yayınları",VC Eltmann - TV Rottenburg (21:25)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream395.m3u8
 #EXTINF:-1 tvg-name="Vanspor - Sakaryaspor (19:00)" group-title="Maç Yayınları",Vanspor - Sakaryaspor (19:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivetrts.m3u8
-#EXTINF:-1 tvg-name="Velcz Z - McHugh A (22:20)" group-title="Maç Yayınları",Velcz Z - McHugh A (22:20)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream211.m3u8
-#EXTINF:-1 tvg-name="Velcz Z - McHugh A (22:20)" group-title="Maç Yayınları",Velcz Z - McHugh A (22:20)
-https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream211.m3u8
 #EXTINF:-1 tvg-name="Velez Sarsfield - Talleres Cordoba (23:00)" group-title="Maç Yayınları",Velez Sarsfield - Talleres Cordoba (23:00)
 https://andro.okan11gote12sokan.cfd/checklist/androstreamlivechstream238.m3u8
 #EXTINF:-1 tvg-name="Velez Sarsfield - Talleres Cordoba (23:00)" group-title="Maç Yayınları",Velez Sarsfield - Talleres Cordoba (23:00)
